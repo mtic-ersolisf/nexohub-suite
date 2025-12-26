@@ -28,13 +28,7 @@ export default function Home() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="
-              rounded-full px-6 py-3 font-semibold text-navy
-              bg-gradient-to-r from-cupoGreen via-tealGreen to-mint
-              hover:brightness-110 transition
-              shadow-[0_0_26px_rgba(68,221,105,0.28)]
-              border border-white/10
-            "
+            className="rounded-full px-6 py-3 font-semibold text-ice bg-gradient-to-r from-tealGreen via-cupoGreen to-mint hover:brightness-110 transition shadow-[0_0_26px_rgba(68,221,105,0.28)] border border-white/10"
           >
   Contáctenos
 </a>
