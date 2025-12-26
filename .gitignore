@@ -1,0 +1,6 @@
+
+# Python venv
+services/api/.venv/
+.venv/
+__pycache__/
+*.pyc
