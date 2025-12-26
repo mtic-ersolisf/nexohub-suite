@@ -4,3 +4,9 @@ services/api/.venv/
 .venv/
 __pycache__/
 *.pyc
+node_modules/
+.next/
+.env*
+data/db/
+data/uploads/
+.venv/
