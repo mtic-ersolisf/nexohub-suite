@@ -12,26 +12,57 @@ export default function Home() {
     <main className="min-h-screen px-4 py-10 flex items-center justify-center">
       <div className="w-full max-w-6xl space-y-10">
         {/* Header */}
-        <header className="flex items-center justify-between gap-4">
-          <div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
-              <span className="text-ice">Zona</span>{" "}
-              <span className="bg-gradient-to-r from-verde-cupo to-azul-nexo bg-clip-text text-transparent">
-                CupoYa
-              </span>{" "}
-              <span className="text-ice">• Ocaña</span>
-            </h1>
-            <p className="text-ice/70 text-sm">Iniciativa técnologica para Conductores y Dueños de Parqueaderos</p>
+        <header className="space-y-4">
+          {/* Fila mobile: botón arriba a la derecha */}
+          <div className="flex justify-end sm:hidden">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                rounded-full px-6 py-3 font-semibold text-navy
+                bg-gradient-to-r from-verde-cupo via-cian-radar to-azul-nexo
+                hover:brightness-110 transition
+                shadow-[0_0_26px_rgba(68,221,105,0.28)]
+                border border-white/10
+              "
+            >
+              Contáctenos
+            </a>
           </div>
 
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full px-6 py-3 font-semibold text-ice bg-gradient-to-r from-tealGreen via-cupoGreen to-mint hover:brightness-110 transition shadow-[0_0_26px_rgba(68,221,105,0.28)] border border-white/10"
-          >
-  Contáctenos
-</a>
+          {/* Contenido: título + subtítulo */}
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
+                <span className="text-cian-radar">Zona</span>{" "}
+                <span className="bg-gradient-to-r from-verde-cupo via-cian-radar to-azul-nexo bg-clip-text text-transparent">
+                  CupoYa
+                </span>{" "}
+                <span className="text-foreground">• Ocaña</span>
+              </h1>
+              <p className="mt-1 text-muted-foreground text-sm">
+                Iniciativa técnologica para Conductores y Dueños de Parqueaderos
+              </p>
+            </div>
+
+            {/* Botón desktop (a la derecha) */}
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                hidden sm:inline-flex
+                rounded-full px-6 py-3 font-semibold text-navy
+                bg-gradient-to-r from-verde-cupo via-cian-radar to-azul-nexo
+                hover:brightness-110 transition
+                shadow-[0_0_26px_rgba(68,221,105,0.28)]
+                border border-white/10
+              "
+            >
+              Contáctenos
+            </a>
+          </div>
         </header>
 
         {/* Hero */}
