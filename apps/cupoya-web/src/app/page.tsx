@@ -60,10 +60,10 @@ export default function Home() {
         <section id="beneficios" className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* CupoYa Card */}
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
-            <div className="flex items-start gap-5">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-5">
               {/* Logo a la izquierda (TODO el bloque) */}
-              <div className="shrink-0">
-                <div className="h-35 w-35 sm:h-32 sm:w-32 rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center justify-center">
+              <div className="shrink-0 flex sm:block justify-center">
+                <div className="h-35 w-35 sm:h-35 sm:w-35 rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4 flex items-center justify-center">
                   <Image
                     src="/brand/cupoya.png"
                     alt="CupoYa"
@@ -109,10 +109,10 @@ export default function Home() {
 
           {/* CajaCero Card */}
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
-            <div className="flex items-start gap-5">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-5">
               {/* Logo a la izquierda (TODO el bloque) */}
-              <div className="shrink-0">
-                <div className="h-35 w-35 sm:h-32 sm:w-32 rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center justify-center">
+              <div className="shrink-0 flex sm:block justify-center">
+                <div className="h-35 w-35 sm:h-35 sm:w-35 rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4 flex items-center justify-center">
                   <Image
                     src="/brand/cajacero.png"
                     alt="CajaCero"
