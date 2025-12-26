@@ -35,7 +35,7 @@ export default function Home() {
           <div className="flex items-start justify-between gap-4">
             <div>
               <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
-                <span className="text-cian-radar">Zona</span>{" "}
+                Zona{" "}
                 <span className="bg-gradient-to-r from-verde-cupo via-cian-radar to-azul-nexo bg-clip-text text-transparent">
                   CupoYa
                 </span>{" "}
