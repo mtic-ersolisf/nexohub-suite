@@ -17,14 +17,10 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # --- IMPORTANTE: usar SIEMPRE admin para migraciones ---
-DATABASE_URL_ADMIN = os.getenv("DATABASE_URL_ADMIN")
-if not DATABASE_URL_ADMIN:
-    raise RuntimeError(
-        "DATABASE_URL_ADMIN no está definida. "
-        "Crea services/api/.env con DATABASE_URL_ADMIN=... (usuario nexohub)."
-    )
+def get_url() -> str:
+    return os.getenv("DATABASE_URL_ADMIN") or os.getenv("DATABASE_URL")
 
-config.set_main_option("sqlalchemy.url", DATABASE_URL_ADMIN)
+config.set_main_option("sqlalchemy.url", get_url())
 
 # --- Detectar modelos para --autogenerate ---
 from app.db.base import Base  # noqa: E402
@@ -48,6 +44,8 @@ def run_migrations_offline() -> None:
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
         compare_type=True,
+        include_schemas=True,
+        version_table_schema="core",
     )
 
     with context.begin_transaction():
@@ -66,6 +64,8 @@ def run_migrations_online() -> None:
             connection=connection,
             target_metadata=target_metadata,
             compare_type=True,
+            include_schemas=True,
+            version_table_schema="core",
         )
 
         with context.begin_transaction():

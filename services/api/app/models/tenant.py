@@ -6,6 +6,7 @@ from app.db.base import Base  # ajusta si tu Base está en otro módulo
 
 class Tenant(Base):
     __tablename__ = "tenants"
+    __table_args__ = {"schema": "core"}
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String(200), unique=True, index=True, nullable=False)

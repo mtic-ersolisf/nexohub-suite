@@ -18,6 +18,7 @@ class UserRole(str, enum.Enum):
 
 class User(Base):
     __tablename__ = "users"
+    __table_args__ = {"schema": "core"}
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
@@ -60,6 +61,6 @@ class User(Base):
         onupdate=func.now(),
     )
 
-    tenant_id: Mapped[int | None] = mapped_column(ForeignKey("tenants.id"), index=True, nullable=True)
+    tenant_id: Mapped[int | None] = mapped_column(ForeignKey("core.tenants.id"), index=True, nullable=True)
 
     tenant = relationship("Tenant", back_populates="users")

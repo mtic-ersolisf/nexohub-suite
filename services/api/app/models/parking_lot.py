@@ -10,18 +10,24 @@ from app.db.base import Base
 
 class ParkingLot(Base):
     __tablename__ = "parking_lots"
+    __table_args__ = (
+        Index("ix_parking_lots_tenant_name", "tenant_id", "name"),
+        {"schema": "cajacero"},
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
     tenant_id: Mapped[int] = mapped_column(
-        ForeignKey("tenants.id", ondelete="CASCADE"),
-        nullable=False,
+        ForeignKey("core.tenants.id", ondelete="CASCADE"),
         index=True,
+        nullable=False,
     )
 
+
+
     # OJO: longitudes alineadas con tu \d parking_lots
-    name: Mapped[str] = mapped_column(String(160), nullable=False)
-    address: Mapped[str | None] = mapped_column(String(220), nullable=True)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    address: Mapped[str | None] = mapped_column(String(300), nullable=True)
     city: Mapped[str | None] = mapped_column(String(120), nullable=True)
 
     capacity: Mapped[int] = mapped_column(Integer, nullable=False)
@@ -40,7 +46,3 @@ class ParkingLot(Base):
     )
 
     tenant = relationship("Tenant", back_populates="parking_lots")
-
-    __table_args__ = (
-        Index("ix_parking_lots_tenant_name", "tenant_id", "name"),
-    )
