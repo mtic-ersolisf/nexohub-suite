@@ -19,8 +19,6 @@ import jwt
 # - >=1 minúscula
 # - >=1 número
 # - >=1 símbolo (no alfanumérico)
-#
-# Nota: Este regex NO restringe caracteres permitidos (excepto que cuenta "símbolo" como no alfanumérico).
 PASSWORD_REGEX = re.compile(
     r"^(?=.{12,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).*$"
 )
@@ -59,7 +57,7 @@ def verify_password(password: str, password_hash: str) -> bool:
 
 
 # -----------------------
-# JWT helpers
+# JWT helpers (single source of truth)
 # -----------------------
 @dataclass(frozen=True)
 class JwtConfig:
@@ -69,10 +67,30 @@ class JwtConfig:
 
 
 def _get_jwt_config() -> JwtConfig:
-    secret = os.getenv("JWT_SECRET", "")
+    """
+    Fuente única de configuración JWT.
+
+    Compatibilidad:
+    - JWT_SECRET (preferido)
+    - SECRET_KEY (fallback típico)
+    - JWT_SECRET_KEY (fallback)
+    """
+    secret = (
+        os.getenv("JWT_SECRET")
+        or os.getenv("SECRET_KEY")
+        or os.getenv("JWT_SECRET_KEY")
+        or ""
+    )
     if not secret:
-        raise RuntimeError("JWT_SECRET is not set in environment/.env")
-    alg = os.getenv("JWT_ALG", "HS256")
+        raise RuntimeError(
+            "JWT secret is not set. Define JWT_SECRET (recommended) in environment/.env"
+        )
+
+    # Compatibilidad:
+    # - JWT_ALG (preferido)
+    # - JWT_ALGORITHM (fallback)
+    alg = os.getenv("JWT_ALG") or os.getenv("JWT_ALGORITHM") or "HS256"
+
     expires_seconds = int(os.getenv("JWT_EXPIRES_SECONDS", "900"))
     return JwtConfig(secret=secret, alg=alg, expires_seconds=expires_seconds)
 
@@ -80,7 +98,7 @@ def _get_jwt_config() -> JwtConfig:
 def create_access_token(subject: str, extra_claims: Optional[Dict[str, Any]] = None) -> str:
     """
     Crea token JWT tipo access token.
-    - subject típicamente: user_id o email.
+    - subject típicamente: user_id (str) o email.
     """
     cfg = _get_jwt_config()
     now = int(time.time())
@@ -103,8 +121,16 @@ def create_access_token(subject: str, extra_claims: Optional[Dict[str, Any]] = N
 
 def decode_and_verify_token(token: str) -> Dict[str, Any]:
     """
-    Decodifica y valida firma/exp. Levanta jwt exceptions si es inválido.
+    Decodifica y valida firma/exp.
+    Lanza excepciones de PyJWT si es inválido.
     """
     cfg = _get_jwt_config()
     return jwt.decode(token, cfg.secret, algorithms=[cfg.alg])
 
+
+# Alias explícito (para que deps.py lo consuma “bonito”)
+def decode_access_token(token: str) -> Dict[str, Any]:
+    """
+    Alias estable para consumo desde dependencias.
+    """
+    return decode_and_verify_token(token)
